@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apartment Tour</title>
+<style>
+  body{margin:0;background:#111;color:#fff;font-family:Georgia,serif;text-align:center}
+  h1{font-weight:normal;letter-spacing:3px;margin:16px 0 8px;font-size:20px}
+  #wrap{position:relative;max-width:900px;margin:auto}
+  #photo{width:100%;height:70vh;object-fit:cover;transition:opacity .6s}
+  #caption{margin:12px;font-size:18px;color:#d4af37}
+  button{background:#d4af37;border:0;padding:12px 22px;margin:6px;font-size:16px;border-radius:4px}
+</style>
+</head>
+<body>
+<h1>APARTMENT TOUR</h1>
+<div id="wrap"><img id="photo" src="1.jpg"></div>
+<div id="caption"></div>
+<button onclick="go(-1)">Back</button>
+<button onclick="toggle()" id="pp">Pause</button>
+<button onclick="go(1)">Next</button>
+
+<script>
+// Edit this list: one line per photo, in tour order
+const tour = [
+  {file:"1.jpg", text:"Exterior"},
+  {file:"2.jpg", text:"Living Room"},
+  {file:"3.jpg", text:"Kitchen & Dining"},
+  {file:"4.jpg", text:"Bedroom"},
+  {file:"5.jpg", text:"Bathroom"},
+  {file:"6.jpg", text:"Balcony"}
+];
+let i=0, timer;
+const img=document.getElementById("photo"), cap=document.getElementById("caption");
+function show(){
+  img.style.opacity=0;
+  setTimeout(()=>{img.src=tour[i].file;cap.textContent=tour[i].text;img.style.opacity=1},300);
+}
+function go(n){i=(i+n+tour.length)%tour.length;show()}
+function toggle(){
+  const b=document.getElementById("pp");
+  if(timer){clearInterval(timer);timer=null;b.textContent="Play"}
+  else{timer=setInterval(()=>go(1),4000);b.textContent="Pause"}
+}
+cap.textContent=tour[0].text;
+timer=setInterval(()=>go(1),4000);
+</script>
+</body>
+</html>
